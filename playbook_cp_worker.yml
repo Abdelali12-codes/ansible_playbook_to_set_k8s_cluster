@@ -1,0 +1,15 @@
+---
+- hosts: workers
+  become: yes
+  tasks:
+  - name: create directory
+    file:
+       path: /home/worker/packages
+       state: directory
+  - name: copy files to pachRPM dir
+    copy:
+         src: ./rpmPack
+         dest: /home/worker/packages
+    
+  
+

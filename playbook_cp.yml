@@ -1,0 +1,17 @@
+---
+- hosts: masters
+  become: yes
+  tasks:
+  - name: create directory
+    file:
+       path: /home/master/packages
+       state: directory
+  - name: copy files to pachRPM dir
+    copy:
+         src: "{{ item }}"
+         dest: /home/master/packages
+    
+    with_items:
+      - ./k8s
+      - ./rpmPack
+

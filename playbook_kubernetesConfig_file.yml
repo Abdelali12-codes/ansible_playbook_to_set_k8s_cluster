@@ -1,0 +1,19 @@
+---
+- hosts: master
+  become: yes
+  tasks:
+    - name: create kubernetes.config
+      file:
+        path: /etc/sysctl.d/kubernetes.conf
+        state: touch
+    - name: add config to master
+      blockinfile:
+        path: /etc/sysctl.d/kubernetes.conf
+        block: |
+           net.ipv4.ip_forward = 1
+           net.bridge.bridge-nf-call-ip6tables = 1
+           net.bridge.bridge-nf-call-iptables = 1
+    - name: reload changes
+      shell: sysctl --system
+
+ 

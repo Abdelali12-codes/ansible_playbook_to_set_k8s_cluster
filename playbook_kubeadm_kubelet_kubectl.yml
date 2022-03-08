@@ -1,0 +1,17 @@
+---
+- hosts: workers
+  become: yes
+  tasks:
+   - name: installation 
+     shell: rpm -ivh --replacefiles --replacepkgs *.rpm 
+     args:
+       chdir: /home/worker/packages/rpmPack
+
+
+- hosts: master
+  become: yes
+  tasks:
+   - name: installation
+     shell: rpm -ivh --replacefiles --replacepkgs *.rpm
+     args:
+       chdir: /home/master/packages/rpmPack

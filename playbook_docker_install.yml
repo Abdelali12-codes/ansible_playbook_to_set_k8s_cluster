@@ -1,0 +1,32 @@
+
+- hosts: master
+  become: yes
+  tasks: 
+    - name: docker instalation
+      yum:
+        name: /home/master/packages/rpmPack/docker.rpm
+        state: installed
+    - name: start docker
+      service:
+         name: docker
+         state: started
+    - name: enable
+      service:
+         name: docker
+         enabled: yes
+
+- hosts: workers
+  become: true
+  tasks: 
+  - name: docker on workers
+    shell: yum install docker.rpm
+    args:
+      chdir: /home/worker/packages/rpmPack
+  - name: docker start
+    service:
+       name: docker
+       state: started
+  - name: enable docker
+    service:
+        name: docker
+        enabled: yes

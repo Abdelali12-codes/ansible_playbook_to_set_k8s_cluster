@@ -1,0 +1,15 @@
+- hosts: master
+  become: true
+  tasks:
+   - name: coredns image
+     shell: podman load < "{{item}}"
+     args:
+       chdir: /home/master/packages/k8s
+     with_items:
+        - kube-scheduler.tar
+        - kube-proxy.tar
+        - kube-apiserver.tar
+        - kube-controller-manager.tar
+        - coredns.tar
+        - etcd.tar
+        - pause.tar

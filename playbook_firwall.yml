@@ -1,0 +1,31 @@
+---
+- hosts: masters
+  become: yes
+  tasks:
+  - firewalld:
+      port: "{{item}}"
+      zone: public
+      state: enabled
+      permanent: yes
+      immediate: yes
+    with_items:
+     - 6443/tcp
+     - 2379/tcp
+     - 2380/tcp
+     - 10250/tcp
+     - 10251/tcp
+     - 10252/tcp
+
+- hosts: workers
+  become: yes
+  tasks:
+  - firewalld:
+      port: "{{item}}"
+      zone: public
+      state: enabled
+      permanent: yes
+      immediate: yes
+    with_items:
+     - 10250/tcp
+     - 30000-32767/tcp
+      
